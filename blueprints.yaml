@@ -1,5 +1,7 @@
 name: Grav Pages as Data
-version: 0.1.0
+slug: pages-as-data
+type: plugin
+version: 0.2.0
 description: Enables .json, .xml and .yml endpoints for all pages.
 icon: ra
 author:
@@ -7,6 +9,14 @@ author:
   email: btopro@outlook.com
   url: https://elmsln.org/
 homepage: https://github.com/btopro/page-as-data
+demo: http://demo.yoursite.com
 keywords: json, yml, xml, api, web service
+docs: https://github.com/btopro/page-as-data/README.md
 bugs: https://github.com/btopro/page-as-data/issues
 license: MIT
+
+dependencies:
+  - { name: grav, version: '>=1.6.0' }
+
+form:
+  validation: loose

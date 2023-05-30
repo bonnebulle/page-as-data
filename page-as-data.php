@@ -1,9 +1,10 @@
 <?php
 namespace Grav\Plugin;
 
+use Composer\Autoload\ClassLoader;
 use Grav\Common\Plugin;
 
-class pageAsDataPlugin extends Plugin {
+class PageAsDataPlugin extends Plugin {
   public static function getSubscribedEvents() {
     return [
       'onPluginsInitialized' => ['onPluginsInitialized', 0],
@@ -11,7 +12,7 @@ class pageAsDataPlugin extends Plugin {
   }
 
   public function onPluginsInitialized() {
-    // hijack output so we can deliver as a different format
+    // Hijack output so we can deliver as a different format
     // if this value isset
     if (isset($_GET['return-as']) && in_array($_GET['return-as'], array('json', 'xml', 'yaml'))) {
       $this->enable([
@@ -20,6 +21,9 @@ class pageAsDataPlugin extends Plugin {
     }
   }
 
+  /**
+   * Delivers the page as a different format.
+   */
   public function deliverFormatAs() {
     /**
      * @var \Grav\Common\Page\Page $page
@@ -37,26 +41,26 @@ class pageAsDataPlugin extends Plugin {
       case 'json':
         header("Content-Type: application/json");
         echo json_encode($pageArray);
-      break;
+        break;
       case 'yaml':
         header("Content-Type: application/yaml");
         echo $page->toYaml();
-      break;
+        break;
       case 'xml':
         header("Content-Type: application/xml");
-        $array2XmlConverter  = new PageAsDataXmlDomConstructor('1.0', 'utf-8');
-        $array2XmlConverter->xmlStandalone   = TRUE;
-        $array2XmlConverter->formatOutput    = TRUE;
+        $array2XmlConverter = new PageAsDataXmlDomConstructor('1.0', 'utf-8');
+        $array2XmlConverter->xmlStandalone = true;
+        $array2XmlConverter->formatOutput = true;
         try {
-          $array2XmlConverter->fromMixed( array('page' => $pageArray) );
-          $array2XmlConverter->normalizeDocument ();
+          $array2XmlConverter->fromMixed(array('page' => $pageArray));
+          $array2XmlConverter->normalizeDocument();
           $xml = $array2XmlConverter->saveXML();
           print $xml;
         }
-        catch( Exception $ex )  {
+        catch(Exception $ex) {
           return $ex;
         }
-      break;
+        break;
     }
     exit();
   }
