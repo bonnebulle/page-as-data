@@ -32,7 +32,7 @@ class PageAsDataPlugin extends Plugin {
      */
     $format = $_GET['return-as'];
     $page = $this->grav['page'];
-    $collection = $page->collection('content', false);
+    $collection = $page->collection('children');
     $pageArray = $page->toArray();
     $children = array();
     foreach ($collection as $item) {
