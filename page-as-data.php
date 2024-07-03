@@ -39,6 +39,26 @@ class PageAsDataPlugin extends Plugin {
       $children[] = $item->toArray();
     }
     $pageArray['children'] = $children;
+    // VBULLE ADD https://github.com/btopro/page-as-data/pull/4/commits/405ec5d89c5f23446f227963b9fe6ccd0aeda914
+    // Other informations about page
+    $pageArray['slug'] = $page->slug();
+    $pageArray['permalink'] = $page->permalink();
+    $pageArray['route'] = $page->route();
+    $pageArray['raw_route'] = $page->rawRoute();
+    $pageArray['route_canonical'] = $page->routeCanonical();
+    $pageArray['path'] = $page->path();
+    $pageArray['folder'] = $page->folder();
+
+    // Get all medias
+    $allmedias = $page->media()->all();
+    $medias = array();
+    foreach ($allmedias as $item) {
+      $medias[] = $item->toArray();
+    }
+    $pageArray['medias'] = $medias;
+    // END VBULLE ADD
+
+
     switch ($format) {
       case 'json':
         header("Content-Type: application/json");
